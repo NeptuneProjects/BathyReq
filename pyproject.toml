@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bathyreq"
+authors = [{ name = "William Jenkins", email = "wjenkins@ucsd.edu" }]
+description = "BathyReq: A Python package for querying public bathymetric data sources."
+readme = "README.md"
+requires-python = ">=3.11"
+keywords = ["bathymetry", "oceanography", "data", "query", "download"]
+license = { text = "MIT" }
+dependencies = ["rasterio", "requests"]
+dynamic = ["version"]
+
+[tool.setuptools.dynamic]
+version = { attr = "bathyreq.__version__" }
