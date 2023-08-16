@@ -1,0 +1,14 @@
+affine==2.4.0
+attrs==23.1.0
+certifi==2023.7.22
+charset-normalizer==3.2.0
+click==8.1.6
+click-plugins==1.1.1
+cligj==0.7.2
+idna==3.4
+numpy==1.25.2
+pyparsing==3.1.1
+rasterio==1.3.8
+requests==2.31.0
+snuggs==1.4.7
+urllib3==2.0.4
