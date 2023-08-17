@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 keywords = ["bathymetry", "oceanography", "data", "query", "download"]
 license = { text = "MIT" }
-dependencies = ["rasterio", "requests"]
+dependencies = ["python-dotenv", "rasterio", "requests", "scipy"]
 dynamic = ["version"]
 
 [tool.setuptools.dynamic]
