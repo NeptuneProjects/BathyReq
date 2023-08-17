@@ -115,6 +115,7 @@ class BathyRequest:
     def form_bbox(
         longitude: Union[float, Iterable[float]],
         latitude: Union[float, Iterable[float]],
+        single_point: bool = False,
     ) -> list[float, float, float, float]:
         """Form bounding box from longitude and latitude.
 
@@ -124,12 +125,21 @@ class BathyRequest:
             Longitude in the form [lon_min, lon_max].
         latitude : Union[float, Iterable[float]]
             Latitude in the form [lat_min, lat_max].
+        single_point : bool, optional
+            If True, add a small buffer to the bounding box, by default False.
 
         Returns
         -------
         list[float, float, float, float]
             Bounding box in the form [lon_min, lat_min, lon_max, lat_max].
         """
+        if single_point:
+            return [
+                np.min(longitude) - 0.001,
+                np.min(latitude) - 0.001,
+                np.max(longitude) + 0.001,
+                np.max(latitude) + 0.001,
+            ]
         return [
             np.min(longitude),
             np.min(latitude),
@@ -155,6 +165,7 @@ class BathyRequest:
         self,
         longitude: Union[float, Iterable[float]],
         latitude: Union[float, Iterable[float]],
+        single_point: bool = False,
         **source_kwargs,
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Get bathymetric data for an area.
@@ -165,6 +176,8 @@ class BathyRequest:
             Longitude in the form [lon_min, lon_max].
         latitude : Union[float, Iterable[float]]
             Latitude in the form [lat_min, lat_max].
+        single_point : bool, optional
+            If True, add a small buffer to the bounding box, by default False.
         **source_kwargs
             Keyword arguments to pass to the data source.
 
@@ -188,21 +201,29 @@ class BathyRequest:
         """
         # Initialize cache
         self.cache_dir.mkdir(parents=True, exist_ok=True)
+
         # Form boundary box
-        bbox = self.form_bbox(longitude, latitude)
+        bbox = self.form_bbox(longitude, latitude, single_point=single_point)
+        
         # Instantiate data source and get request URL
+        if single_point:
+            source_kwargs["size"] = [4, 4]
         data_source = sources.factory(bbox=bbox, source=self.source, **source_kwargs)
         data_source.build_url()
+        
         # Download data to cache
         filepath = (self.cache_dir / self.generate_filename()).with_suffix(
             "." + data_source.request.format
         )
         self.download_data(data_source.url, filepath)
+        
         # Load data from cache
         data, bounds = self.load_data(filepath)
+        
         # Clear cache if requested
         if self.clear_cache:
             filepath.unlink()
+        
         # Get lat/lon grids
         lonvec, latvec = self._get_latlon_grids(bounds, data)
 
@@ -235,6 +256,7 @@ class BathyRequest:
         longitude: Union[float, Iterable[float]],
         latitude: Union[float, Iterable[float]],
         interp_method: Optional[str] = "linear",
+        **source_kwargs,
     ) -> np.ndarray:
         """Get bathymetric data for a point.
 
@@ -247,6 +269,8 @@ class BathyRequest:
         interp_method : Optional[str], optional
             Interpolation method, by default "linear". See SciPy documentation for
             details (https://docs.scipy.org/doc/scipy/reference/interpolate.html).
+        **source_kwargs
+            Keyword arguments to pass to the data source.
 
         Returns
         -------
@@ -263,7 +287,15 @@ class BathyRequest:
         interpolated at the query points `longitude` and `latitude`.
 
         """
-        data, lonvec, latvec = self.get_area(longitude, latitude)
+        try:
+            iter(longitude)
+            single_point = False
+        except:
+            single_point = True
+
+        data, lonvec, latvec = self.get_area(
+            longitude, latitude, single_point=single_point, **source_kwargs
+        )
         return interpn(
             (lonvec, latvec),
             data.T,
