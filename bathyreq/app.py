@@ -22,15 +22,19 @@ class DataSource(Protocol):
     def __init__(self) -> None:
         ...
 
+    def build_url() -> None:
+        ...
+
 
 class BathyRequest:
     def __init__(
         self,
-        source: DataSource = sources.NOAASource(),
+        source: Optional[DataSource] = None,
         cache_dir: Path = CACHE_DIR,
     ) -> None:
         self.source = source
         self.cache_dir = cache_dir
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
 
     def __call__(
         self,
