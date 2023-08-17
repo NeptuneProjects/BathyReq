@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from enum import Enum
@@ -18,7 +17,7 @@ class DataSource(Enum):
 
 
 class Source(Protocol):
-    """Interface for data sources to the bathymetry requester."""
+    # """Interface for data sources to the bathymetry requester."""
 
     def __init__(self) -> None:
         ...
@@ -30,32 +29,32 @@ class Source(Protocol):
 def factory(
     bbox: list[float, float, float, float], source: str = "ncei", **kwargs
 ) -> Source:
-    """Factory function to return a source object.
+    # """Factory function to return a source object.
 
-    Parameters
-    ----------
-    bbox : list[float, float, float, float]
-        Bounding box in the form [lon_min, lat_min, lon_max, lat_max].
-    source : str, optional
-        Source of the data, by default "ncei".
+    # Parameters
+    # ----------
+    # bbox : list[float, float, float, float]
+    #     Bounding box in the form [lon_min, lat_min, lon_max, lat_max].
+    # source : str, optional
+    #     Source of the data, by default "ncei".
 
-    Returns
-    -------
-    Source
-        Source object.
+    # Returns
+    # -------
+    # Source
+    #     Source object.
 
-    Raises
-    ------
-    DataSourceNotImplemented
-        Raised if the data source is not implemented.
+    # Raises
+    # ------
+    # DataSourceNotImplemented
+    #     Raised if the data source is not implemented.
 
-    Examples
-    --------
-    >>> from bathyreq.sources import factory
-    >>> inst = factory(bbox=[-117, 32, -116, 33], source="ncei")
-    >>> inst.build_url()
-    >>> url = inst.url
-    """
+    # Examples
+    # --------
+    # >>> from bathyreq.sources import factory
+    # >>> inst = factory(bbox=[-117, 32, -116, 33], source="ncei")
+    # >>> inst.build_url()
+    # >>> url = inst.url
+    # """
     if DataSource(source) == DataSource.BLUE_TOPO:
         raise DataSourceNotImplemented("BLUE_TOPO not implemented yet.")
     elif DataSource(source) == DataSource.GEBCO:
