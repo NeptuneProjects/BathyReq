@@ -85,7 +85,6 @@ class BathyRequest:
     ) -> None:
         self.source = source
         self.cache_dir = cache_dir
-        self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.clear_cache = clear_cache
 
     @staticmethod
@@ -187,6 +186,8 @@ class BathyRequest:
         requested. Latitude and longitude grids (vectors) are generated from the
         bounding box and according to the bathymetric data dimensions.
         """
+        # Initialize cache
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
         # Form boundary box
         bbox = self.form_bbox(longitude, latitude)
         # Instantiate data source and get request URL
