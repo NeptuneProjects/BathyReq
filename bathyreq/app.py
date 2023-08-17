@@ -209,7 +209,9 @@ class BathyRequest:
         return data, lonvec, latvec
 
     @staticmethod
-    def _get_latlon_grids(bounds: rasterio.coords.BoundingBox, data: np.ndarray):
+    def _get_latlon_grids(
+        bounds: rasterio.coords.BoundingBox, data: np.ndarray
+    ) -> tuple[np.ndarray, np.ndarray]:
         """Get lat/lon grids from bounding box and data.
 
         Parameters
@@ -287,7 +289,7 @@ class BathyRequest:
             return np.flipud(dataset.read(1)), dataset.bounds
 
 
-def clear_cache(cache_dir: Path = CACHE_DIR):
+def clear_cache(cache_dir: Path = CACHE_DIR) -> None:
     """Clears cache.
 
     Parameters
