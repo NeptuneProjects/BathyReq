@@ -135,16 +135,16 @@ class BathyRequest:
         """
         if single_point:
             return [
-                np.min(longitude) - 0.001,
-                np.min(latitude) - 0.001,
-                np.max(longitude) + 0.001,
-                np.max(latitude) + 0.001,
+                min(longitude) - 0.001,
+                min(latitude) - 0.001,
+                max(longitude) + 0.001,
+                max(latitude) + 0.001,
             ]
         return [
-            np.min(longitude),
-            np.min(latitude),
-            np.max(longitude),
-            np.max(latitude),
+            min(longitude),
+            min(latitude),
+            max(longitude),
+            max(latitude),
         ]
 
     @staticmethod
@@ -204,26 +204,26 @@ class BathyRequest:
 
         # Form boundary box
         bbox = self.form_bbox(longitude, latitude, single_point=single_point)
-        
+
         # Instantiate data source and get request URL
         if single_point:
-            source_kwargs["size"] = [4, 4]
+            source_kwargs["size"] = [2, 2]
         data_source = sources.factory(bbox=bbox, source=self.source, **source_kwargs)
         data_source.build_url()
-        
+
         # Download data to cache
         filepath = (self.cache_dir / self.generate_filename()).with_suffix(
             "." + data_source.request.format
         )
         self.download_data(data_source.url, filepath)
-        
+
         # Load data from cache
         data, bounds = self.load_data(filepath)
-        
+
         # Clear cache if requested
         if self.clear_cache:
             filepath.unlink()
-        
+
         # Get lat/lon grids
         lonvec, latvec = self._get_latlon_grids(bounds, data)
 
@@ -287,6 +287,8 @@ class BathyRequest:
         interpolated at the query points `longitude` and `latitude`.
 
         """
+        DECIMALS = 5
+
         try:
             iter(longitude)
             single_point = False
@@ -297,9 +299,9 @@ class BathyRequest:
             longitude, latitude, single_point=single_point, **source_kwargs
         )
         return interpn(
-            (lonvec, latvec),
+            (np.round(lonvec, DECIMALS), np.round(latvec, DECIMALS)),
             data.T,
-            np.vstack((longitude, latitude)).T,
+            np.round(np.vstack((longitude, latitude)).T, DECIMALS),
             method=interp_method,
         )
 
