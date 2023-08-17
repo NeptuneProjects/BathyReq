@@ -15,7 +15,7 @@ from scipy.interpolate import interpn
 import bathyreq.sources.sources as sources
 
 SMOKE_TEST = True
-CACHE_DIR = Path("cache")
+CACHE_DIR = Path(__file__).parents[1] / "cache"
 
 
 class BathyRequest:
