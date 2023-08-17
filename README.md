@@ -3,7 +3,7 @@ A Python package for querying public bathymetric data sources.
 Currently only digital elevation model (DEM) data from the [NOAA National Centers for Environmental Information (NCEI)](https://www.ncei.noaa.gov/) database is supported.
 
 > [!WARNING]
-> This package is still in development and is not yet ready for use.
+> This package is still in development.
 
 ## Installation
 ```bash
