@@ -166,3 +166,4 @@ cython_debug/
 .vscode/
 cache/
 test.py
+test/
