@@ -1,3 +1,6 @@
-__version__ = "0.0.1"
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-from .app import BathyRequest
+__version__ = "0.1.0"
+
+from .app import BathyRequest, clear_cache
