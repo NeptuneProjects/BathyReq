@@ -305,4 +305,5 @@ def clear_cache(cache_dir: Path = CACHE_DIR):
     clears the cache, which may be good to do periodically if you are not doing
     so upon each request.
     """
-    shutil.rmtree(cache_dir)
+    if cache_dir.exists():
+        shutil.rmtree(cache_dir)
