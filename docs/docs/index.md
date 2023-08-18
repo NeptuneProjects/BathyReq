@@ -34,10 +34,12 @@ data = req.get_points(
 
 Contributions are welcome! If you have any issues using the package, please open an issue on GitHub. If you would like to contribute to the package, please fork the repository and open a pull request.
 
-## The author
+## Author
 
-William Jenkins,  
-Ph.D. candidate at Scripps Institution of Oceanography
+**William Jenkins**  
+Ph.D. candidate  
+Scripps Institution of Oceanography  
+University of California San Diego  
 [https://wjenkins.me](https://wjenkins.me)
 
 ## Support
@@ -45,3 +47,7 @@ Ph.D. candidate at Scripps Institution of Oceanography
 If you find this package useful and if it's saved you lots of time and effort, please consider supporting the project by buying me a coffee!
 
 <a href="https://www.buymeacoffee.com/wjenkins" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+
+## License
+
+This project is licensed under the MIT License - see the [license](license.md) for details.
