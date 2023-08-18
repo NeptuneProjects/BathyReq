@@ -23,4 +23,4 @@ jobs:
       - run: pip install mkdocs \
               mkdocs-material \
               "mkdocstrings[python]"
-      - run: mkdocs gh-deploy --force
+      - run: cd docs/ && mkdocs gh-deploy --force
