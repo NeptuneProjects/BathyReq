@@ -22,5 +22,6 @@ jobs:
             mkdocs-material-
       - run: pip install mkdocs \
               mkdocs-material \
-              "mkdocstrings[python]"
+              "mkdocstrings[python]" \
+              mkdocs-git-revision-date-localized-plugin
       - run: cd docs/ && mkdocs gh-deploy --force
