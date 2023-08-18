@@ -135,10 +135,10 @@ class BathyRequest:
         """
         if single_point:
             return [
-                min(longitude) - 0.001,
-                min(latitude) - 0.001,
-                max(longitude) + 0.001,
-                max(latitude) + 0.001,
+                longitude - 0.001,
+                latitude - 0.001,
+                longitude + 0.001,
+                latitude + 0.001,
             ]
         return [
             min(longitude),
