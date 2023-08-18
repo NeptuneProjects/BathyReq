@@ -3,4 +3,4 @@
 
 __version__ = "0.1.1"
 
-from .app import BathyRequest, clear_cache
+from .request import BathyRequest, clear_cache

@@ -1,0 +1,57 @@
+site_name: BathyReq
+
+theme:
+  name: "material"
+  # features:
+    # - navigation.tabs
+  palette: 
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue grey
+      toggle:
+        icon: material/brightness-7 
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue grey
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
+plugins:
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_section_style: list
+            merge_init_into_class: false
+            show_object_full_path: false
+            show_root_full_path: true
+            show_root_heading: false
+            show_root_members_full_path: true
+            show_root_toc_entry: true
+            show_source: false
+            show_submodules: true
+          paths: [..]
+
+
+copyright: Copyright 2023 William Jenkins
+repo_url: https://github.com/NeptuneProjects/BathyReq
+
+nav:
+  - Home: index.md
+  - tutorials.md
+  - "How-to Guides": how-to-guides.md
+  - Reference:
+    - bathyreq.request: reference/request.md
+    - bathyreq.sources.factory: reference/sources.md
+    - bathyreq.sources.blue_topo: reference/sources_bluetopo.md
+    - bathyreq.sources.gebco: reference/sources_gebco.md
+    - bathyreq.sources.ncei: reference/sources_ncei.md
+  - explanation.md
