@@ -1,4 +1,11 @@
 # BathyReq
+
+<figure markdown>
+  ![Banner](assets/banner.png){ width="800" }
+  <figcaption>Digital elevation model (DEM) data from NOAA NCEI.</figcaption>
+</figure>
+
+
 A Python package for querying public bathymetric data sources.
 Currently only digital elevation model (DEM) data from the [NOAA National Centers for Environmental Information (NCEI)](https://www.ncei.noaa.gov/) database is supported.
 Future development will focus on implementing other sources, such as the [General Bathymetric Chart of the Oceans (GEBCO)](https://www.gebco.net) and NOAA's new [Blue Topo](https://nauticalcharts.noaa.gov/data/bluetopo.html) project.
