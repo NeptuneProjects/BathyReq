@@ -15,6 +15,7 @@ Examples:
     >>> print(data.shape)
     (400, 400)
     >>> data = req.get_point(longitude=-117.43000, latitude=32.55000)
+    [-1017.61428833]
 """
 
 import datetime
