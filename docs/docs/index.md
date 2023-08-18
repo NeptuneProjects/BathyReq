@@ -34,6 +34,11 @@ data = req.get_points(
 
 Contributions are welcome! If you have any issues using the package, please open an issue on GitHub. If you would like to contribute to the package, please fork the repository and open a pull request.
 
+## The author
+
+William Jenkins,  
+Ph.D. candidate at Scripps Institution of Oceanography
+[https://wjenkins.me](https://wjenkins.me)
 
 ## Support
 
