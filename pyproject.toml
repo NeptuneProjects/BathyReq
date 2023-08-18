@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -16,6 +16,9 @@ dynamic = ["version"]
 [project.urls]
 Homepage = "https://neptuneprojects.github.io/BathyReq/"
 Repository = "https://github.com/NeptuneProjects/BathyReq"
+
+[tool.setuptools]
+packages = ["bathyreq"]
 
 [tool.setuptools.dynamic]
 version = {attr = "bathyreq.__version__"}
