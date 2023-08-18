@@ -2,8 +2,6 @@ site_name: BathyReq
 
 theme:
   name: "material"
-  # features:
-    # - navigation.tabs
   palette: 
     # Palette toggle for light mode
     - scheme: default
