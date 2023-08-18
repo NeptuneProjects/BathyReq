@@ -5,7 +5,7 @@ Future development will focus on implementing other sources, such as the [Genera
 
 ## Installation
 ```bash
-pip install git+https://github.com/NeptuneProjects/BathyReq.git
+pip install bathyreq
 ```
 
 ## Usage
