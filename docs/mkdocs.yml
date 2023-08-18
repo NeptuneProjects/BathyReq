@@ -2,8 +2,10 @@ site_name: BathyReq
 
 theme:
   name: "material"
+  favicon: assets/logo.png
   icon:
     repo: fontawesome/brands/github
+  logo: assets/logo.png
   palette: 
     # Palette toggle for light mode
     - scheme: default
