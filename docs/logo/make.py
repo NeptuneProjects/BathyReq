@@ -11,10 +11,16 @@ import cmocean
 from matplotlib.colors import TwoSlopeNorm
 import matplotlib.pyplot as plt
 
+DPI = 300
 PATH = Path("../docs/assets")
 
 
-def make_image(lon, lat, size, figsize, dpi=300) -> plt.Figure:
+def make_image(
+    lon: list[float, float],
+    lat: list[float, float],
+    size: list[int, int],
+    figsize: tuple[int, int],
+) -> plt.Figure:
     req = bathyreq.BathyRequest()
     data, _, _ = req.get_area(longitude=lon, latitude=lat, size=size)
 
@@ -30,7 +36,7 @@ def make_logo() -> None:
     LON = [-117.30, -117.25]
     LAT = [32.84, 32.89]
 
-    make_image(LON, LAT, [1000, 1000], (3, 3)).savefig(PATH / "logo.png")
+    make_image(LON, LAT, [1000, 1000], (3, 3)).savefig(PATH / "logo.png", dpi=DPI)
     plt.close()
 
 
@@ -38,11 +44,11 @@ def make_banner() -> None:
     LON = [-117.36, -117.24]
     LAT = [32.845, 32.915]
 
-    make_image(LON, LAT, [2000, 1000], (6, 3)).savefig(PATH / "banner.png")
+    make_image(LON, LAT, [2000, 1000], (6, 3)).savefig(PATH / "banner.png", dpi=DPI)
     plt.close()
 
 
-def main(args: argparse.Namespace):
+def main(args: argparse.Namespace) -> None:
     if args.banner:
         make_banner()
     if args.logo:
