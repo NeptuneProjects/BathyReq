@@ -1,3 +1,5 @@
+<div align="center"> <img src="docs/docs/assets/banner.png"> </div>
+
 # BathyReq
 A Python package for querying public bathymetric data sources.
 Currently only digital elevation model (DEM) data from the [NOAA National Centers for Environmental Information (NCEI)](https://www.ncei.noaa.gov/) database is supported.
