@@ -4,11 +4,13 @@
 """Module provides the `BathyRequest` class for requesting bathymetric data
 from a public data source.
 
-Example:
+Examples:
     >>> import bathyreq
     >>> req = bathyreq.BathyRequest()
     >>> data, lonvec, latvec = req.get_area(
-    ...     longitude=[-117.43000, -117.23000], latitude=[32.55000, 32.75000]
+    ...     longitude=[-117.43000, -117.23000],
+    ...     latitude=[32.55000, 32.75000],
+    ...     size=[400, 400],
     ... )
     >>> print(data.shape)
     (400, 400)
