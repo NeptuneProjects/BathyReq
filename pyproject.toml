@@ -17,8 +17,9 @@ dynamic = ["version"]
 Homepage = "https://neptuneprojects.github.io/BathyReq/"
 Repository = "https://github.com/NeptuneProjects/BathyReq"
 
-[tool.setuptools]
-packages = ["bathyreq"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bathyreq*"]
 
 [tool.setuptools.dynamic]
 version = {attr = "bathyreq.__version__"}
