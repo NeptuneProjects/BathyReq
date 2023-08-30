@@ -1,5 +1,7 @@
 # BathyReq
 
+[![DOI](https://zenodo.org/badge/679471492.svg)](https://zenodo.org/badge/latestdoi/679471492)
+
 <div align="center"> <img src="docs/docs/assets/banner.png"> </div>
 
 A Python package for querying public bathymetric data sources.
@@ -32,5 +34,3 @@ data = req.get_points(
     longitude=[-117.43, -117.23], latitude=[32.55, 32.75]
 )
 ```
-
-[![DOI](https://zenodo.org/badge/679471492.svg)](https://zenodo.org/badge/latestdoi/679471492)
