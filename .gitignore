@@ -169,3 +169,4 @@ test.py
 test/
 dev/
 docs/site/
+pypi.sh
