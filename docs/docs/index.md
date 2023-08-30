@@ -48,6 +48,8 @@ Scripps Institution of Oceanography
 University of California San Diego  
 [https://wjenkins.me](https://wjenkins.me)
 
+[![DOI](https://zenodo.org/badge/679471492.svg)](https://zenodo.org/badge/latestdoi/679471492)
+
 ## Support
 
 If you find this package useful and if it's saved you lots of time and effort, please consider supporting the project by buying me a coffee!
