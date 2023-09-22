@@ -283,6 +283,7 @@ class BathyRequest:
 
         Returns:
             Bathymetric data and bounding box.
+            Bounding box.
         """
         with rasterio.open(filepath, "r") as dataset:
             return np.flipud(dataset.read(1)), dataset.bounds
