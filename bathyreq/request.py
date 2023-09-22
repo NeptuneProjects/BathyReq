@@ -255,7 +255,7 @@ class BathyRequest:
 
         Returns:
             Bathymetric data interpolated at the query points `longitude` and
-            `latitude`.
+        `latitude`.
         
         """
         DECIMALS = 5
