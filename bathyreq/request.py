@@ -254,9 +254,7 @@ class BathyRequest:
             **source_kwargs: Keyword arguments to pass to the data source.
 
         Returns:
-            Bathymetric data interpolated at the query points `longitude` and
-        `latitude`.
-
+            Bathymetric data interpolated at the query points `longitude` and `latitude`.
         """
         DECIMALS = 5
 
