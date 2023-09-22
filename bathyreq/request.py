@@ -243,7 +243,7 @@ class BathyRequest:
         and request URL built. Data are downloaded to the cache and loaded into
         memory. The cache is cleared if requested. Bathymetric data are
         interpolated at the query points `longitude` and `latitude`. Additional
-        documentation available at 
+        documentation available at
         https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interpn.html
 
         Args:
@@ -256,7 +256,7 @@ class BathyRequest:
         Returns:
             Bathymetric data interpolated at the query points `longitude` and
         `latitude`.
-        
+
         """
         DECIMALS = 5
 
