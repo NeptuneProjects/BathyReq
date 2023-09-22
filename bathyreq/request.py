@@ -282,7 +282,7 @@ class BathyRequest:
             filepath: Path to load data from.
 
         Returns:
-            Bathymetric data and bounding box.
+            Bathymetric data.
             Bounding box.
         """
         with rasterio.open(filepath, "r") as dataset:
