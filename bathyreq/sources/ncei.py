@@ -68,7 +68,7 @@ class NCEIBase:
         Returns:
             The base URL is stored in the `url` attribute.
         """
-        self.url = "/".join([v for k, v in asdict(self).items() if v is not None])
+        self.url = "/".join([v for v in asdict(self).values() if v is not None])
 
 
 @dataclass

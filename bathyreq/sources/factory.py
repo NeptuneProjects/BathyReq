@@ -80,7 +80,22 @@ def factory(
     if DataSource(source) == DataSource.BLUE_TOPO:
         raise DataSourceNotImplemented("BLUE_TOPO not implemented yet.")
     elif DataSource(source) == DataSource.GEBCO:
-        raise DataSourceNotImplemented("GEBCO not implemented yet.")
+        size = kwargs.get("size", [400, 400])
+        return gebco.GEBCOSource(
+            base=gebco.GEBCOBase(),
+            request=gebco.GEBCORequest(
+                request="getmap",
+                service="wms",
+                BBOX=bbox,
+                crs=kwargs.get("crs", "EPSG:4326"),
+                # format=kwargs.get("format", "image/jpeg"),
+                format=kwargs.get("format", "image/tiff"),
+                layers=kwargs.get("layers", "gebco_latest_sub_ice_topo"),
+                width=size[0],
+                height=size[1],
+                version=kwargs.get("version", "1.3.0"),
+            ),
+        )
     if DataSource(source) == DataSource.NCEI:
         return ncei.NCEISource(
             base=ncei.NCEIBase(),

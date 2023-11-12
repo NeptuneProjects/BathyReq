@@ -195,9 +195,15 @@ class BathyRequest:
         data_source.build_url()
 
         # Download data to cache
+        fmt = data_source.request.format
+        if fmt == "image/jpeg":
+            fmt = "jpeg"
+        if fmt == "image/tiff":
+            fmt = "tiff"
         filepath = (self.cache_dir / self.generate_filename()).with_suffix(
-            "." + data_source.request.format
+            "." + fmt
         )
+        print(data_source.url)
         self.download_data(data_source.url, filepath)
 
         # Load data from cache
@@ -267,6 +273,8 @@ class BathyRequest:
         data, lonvec, latvec = self.get_area(
             longitude, latitude, single_point=single_point, **source_kwargs
         )
+        print(data.shape, lonvec.shape, latvec.shape)
+        print(data, lonvec, latvec)
         return interpn(
             (np.round(lonvec, DECIMALS), np.round(latvec, DECIMALS)),
             data.T,

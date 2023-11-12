@@ -26,19 +26,56 @@
 
 """Module for composing GEBCO `Source`."""
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, field
+from typing import Optional
+import urllib.parse
 
 
 @dataclass
 class GEBCOBase:
-    ...
+    """Base class for GEBCO requests.
+    """
 
+    url: str = "https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv"
+        
 
 @dataclass
 class GEBCORequest:
-    ...
+    BBOX: list[str]
+    request: str = "getmap"
+    service: str = "wms"
+    crs: str = "EPSG:4326"
+    format: str = "image/jpeg"
+    layers: str = "gebco_latest_sub_ice_topo"
+    width: int = 1200
+    height: int = 600
+    version: str = "1.3.0"
+
+    def build_request(self) -> None:
+        self.format_attributes()
+        self.request = urllib.parse.urlencode(asdict(self))
+
+
+    def format_attributes(self) -> None:
+        """Format the attributes for proper parsing of the request string.
+
+        Returns:
+            The attributes are formatted in place.
+        """
+        self.BBOX = f"{','.join(map('{:.5f}'.format, self.BBOX))}"
 
 
 @dataclass
 class GEBCOSource:
-    ...
+    base: GEBCOBase = field(default_factory=GEBCOBase())
+    request: Optional[GEBCORequest] = None
+
+    def build_url(self) -> None:
+        """Build the URL for the request.
+
+        Returns:
+            The URL is stored in the `url` attribute.
+        """
+        self.base
+        self.request.build_request()
+        self.url = "?".join([self.base.url, self.request.request])
