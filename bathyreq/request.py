@@ -165,10 +165,10 @@ class BathyRequest:
             >>> data, lonvec, latvec = req.get_area(
             ...     longitude=[-117.43000, -117.23000],
             ...     latitude=[32.55000, 32.75000],
-            ...     size=[400, 400],
+            ...     size=[100, 400],
             ... )
             >>> print(data.shape)
-            (400, 400)
+            (400, 100)
 
         Args:
             longitude: Longitude in the form `[lon_min, lon_max]`.
@@ -177,7 +177,9 @@ class BathyRequest:
             **source_kwargs: Keyword arguments to pass to `Source`.
 
         Returns:
-            Bathymetric data, longitude grid, and latitude grid.
+            Bathymetric data (n_latitude, n_longitude)
+            Longitude grid
+            Latitude grid.
 
         Raises:
             requests.HTTPError: If the request to the URL fails.
@@ -203,7 +205,6 @@ class BathyRequest:
         filepath = (self.cache_dir / self.generate_filename()).with_suffix(
             "." + fmt
         )
-        print(data_source.url)
         self.download_data(data_source.url, filepath)
 
         # Load data from cache
@@ -226,7 +227,7 @@ class BathyRequest:
 
         Args:
             bounds: Bounding box.
-            data: Bathymetric data.
+            data: Bathymetric data (n_latitude x n_longitude).
 
         Returns:
             Longitude and latitude grids.
@@ -273,8 +274,6 @@ class BathyRequest:
         data, lonvec, latvec = self.get_area(
             longitude, latitude, single_point=single_point, **source_kwargs
         )
-        print(data.shape, lonvec.shape, latvec.shape)
-        print(data, lonvec, latvec)
         return interpn(
             (np.round(lonvec, DECIMALS), np.round(latvec, DECIMALS)),
             data.T,
@@ -290,7 +289,7 @@ class BathyRequest:
             filepath: Path to load data from.
 
         Returns:
-            Bathymetric data.
+            Bathymetric data (n_latitude x n_longitude).
             Bounding box.
         """
         with rasterio.open(filepath, "r") as dataset:
