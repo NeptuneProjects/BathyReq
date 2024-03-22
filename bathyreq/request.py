@@ -294,7 +294,7 @@ class BathyRequest:
             Bounding box.
         """
         with rasterio.open(filepath, "r") as dataset:
-            return np.flipud(dataset.read(1)), dataset.bounds
+            return dataset.read(1), dataset.bounds
 
 
 def clear_cache(cache_dir: Path = CACHE_DIR) -> None:
