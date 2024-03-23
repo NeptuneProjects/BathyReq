@@ -202,9 +202,7 @@ class BathyRequest:
             fmt = "jpeg"
         if fmt == "image/tiff":
             fmt = "tiff"
-        filepath = (self.cache_dir / self.generate_filename()).with_suffix(
-            "." + fmt
-        )
+        filepath = (self.cache_dir / self.generate_filename()).with_suffix("." + fmt)
         self.download_data(data_source.url, filepath)
 
         # Load data from cache
