@@ -47,7 +47,7 @@ plugins:
       enable_creation_date: true
 
 
-copyright: Copyright 2023 William Jenkins
+copyright: Copyright 2023-2024 William Jenkins
 repo_url: https://github.com/NeptuneProjects/BathyReq
 
 nav:
