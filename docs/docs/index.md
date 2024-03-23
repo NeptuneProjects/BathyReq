@@ -20,7 +20,7 @@ Download bathymetric data for a given area:
 ```python
 import bathyreq
 
-req = bathyreq.BathyReq()
+req = bathyreq.BathyRequest()
 data, lonvec, latvec = req.get_area(
     longitude=[-117.43, -117.23], latitude=[32.55, 32.75]
 )
@@ -30,7 +30,7 @@ Download bathymetric data for a given set of longitude/latitude pairs:
 ```python
 import bathyreq
 
-req = bathyreq.BathyReq()
+req = bathyreq.BathyRequest()
 data = req.get_points(
     longitude=[-117.43, -117.23], latitude=[32.55, 32.75]
 )
@@ -42,8 +42,7 @@ Contributions are welcome! If you have any issues using the package, please open
 
 ## Author
 
-**William Jenkins**  
-Ph.D. candidate  
+**William Jenkins, Ph.D.**  
 Scripps Institution of Oceanography  
 University of California San Diego  
 [https://wjenkins.me](https://wjenkins.me)
