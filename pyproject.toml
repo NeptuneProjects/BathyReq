@@ -7,10 +7,17 @@ name = "bathyreq"
 description = "BathyReq: A Python package for querying public bathymetric data sources."
 readme = "README.md"
 requires-python = ">=3.10"
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 keywords = ["bathymetry", "oceanography", "data", "query", "download"]
-authors = [{name = "William Jenkins", email = "wjenkins@ucsd.edu"}]
-dependencies = ["python-dotenv", "rasterio", "requests", "scipy"]
+authors = [{ name = "William Jenkins", email = "wjenkins@ucsd.edu" }]
+dependencies = [
+    "cmocean",
+    "matplotlib",
+    "python-dotenv",
+    "rasterio",
+    "requests",
+    "scipy",
+]
 dynamic = ["version"]
 
 [project.urls]
@@ -22,4 +29,4 @@ where = ["."]
 include = ["bathyreq*"]
 
 [tool.setuptools.dynamic]
-version = {attr = "bathyreq.__version__"}
+version = { attr = "bathyreq.__version__" }
