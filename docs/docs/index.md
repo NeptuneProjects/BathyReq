@@ -26,13 +26,13 @@ data, lonvec, latvec = req.get_area(
 )
 ```
 
-Download bathymetric data for a given set of longitude/latitude pairs:
+Download bathymetric data for a single longitude/latitude pair:
 ```python
 import bathyreq
 
 req = bathyreq.BathyRequest()
-data = req.get_points(
-    longitude=[-117.43, -117.23], latitude=[32.55, 32.75]
+data = req.get_point(
+    longitude=-117.43, latitude=32.75
 )
 ```
 
