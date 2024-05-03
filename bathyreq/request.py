@@ -244,13 +244,8 @@ class BathyRequest:
     ) -> np.ndarray:
         """Get bathymetric data for a single point.
 
-        An area of bathymetry is downloaded according to the min/max of the
-        supplied longitude and latitude vectors. The data source is instantiated
-        and request URL built. Data are downloaded to the cache and loaded into
-        memory. The cache is cleared if requested. Bathymetric data are
-        interpolated at the query points `longitude` and `latitude`. Additional
-        documentation available at
-        https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.interpn.html
+        A small area of bathymetry surrounding the query point is downloaded
+        and interpolated at the query points `longitude` and `latitude`.
 
         Args:
             longitude: Longitude.
