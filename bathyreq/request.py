@@ -174,7 +174,8 @@ class BathyRequest:
             longitude: Longitude in the form `[lon_min, lon_max]`.
             latitude: Latitude in the form `[lat_min, lat_max]`.
             single_point: If `True`, add a small buffer to the bounding box.
-            **source_kwargs: Keyword arguments to pass to `Source`.
+            **source_kwargs: Keyword arguments to pass to `Source`. For example,
+                `size=[100, 400]` ([n_longitude, n_latitude]).
 
         Returns:
             Bathymetric data (n_latitude, n_longitude)
@@ -241,7 +242,7 @@ class BathyRequest:
         interp_method: Optional[str] = "linear",
         **source_kwargs: dict,
     ) -> np.ndarray:
-        """Get bathymetric data for a point.
+        """Get bathymetric data for a single point.
 
         An area of bathymetry is downloaded according to the min/max of the
         supplied longitude and latitude vectors. The data source is instantiated
@@ -263,21 +264,30 @@ class BathyRequest:
         """
         DECIMALS = 5
 
-        try:
-            iter(longitude)
-            single_point = False
-        except:
-            single_point = True
+        # TODO: This is no longer needed for this method, but may be needed for 'get_points'.
+        # try:
+        #     iter(longitude)
+        #     single_point = False
+        # except: # TODO: Specify exception ("TypeError")
+        #     single_point = True
 
         data, lonvec, latvec = self.get_area(
-            longitude, latitude, single_point=single_point, **source_kwargs
+            longitude, latitude, single_point=True, **source_kwargs
         )
         return interpn(
-            (np.round(lonvec, DECIMALS), np.round(latvec, DECIMALS)),
-            data.T,
-            np.round(np.vstack((longitude, latitude)).T, DECIMALS),
+            (np.round(latvec, DECIMALS), np.round(lonvec, DECIMALS)),
+            data,
+            np.round(np.vstack((latitude, longitude)).T, DECIMALS),
             method=interp_method,
         )
+
+    # TODO: Implement get_points method to handle multiple lat/lon pairs.
+    # def get_points():
+    #     pass
+
+    # TODO: Implement get_profile method to handle a line between two lat/lon pairs.
+    # def get_profile():
+    #     pass
 
     @staticmethod
     def load_data(filepath: Path) -> tuple[np.ndarray, rasterio.coords.BoundingBox]:
