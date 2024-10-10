@@ -43,7 +43,7 @@ import datetime
 from pathlib import Path
 import secrets
 import shutil
-from typing import Iterable, Optional, Union
+from typing import Sequence
 
 import numpy as np
 import rasterio
@@ -66,7 +66,7 @@ class BathyRequest:
 
     def __init__(
         self,
-        source: Optional[str] = "ncei",
+        source: str = "ncei",
         cache_dir: Path = CACHE_DIR,
         clear_cache: bool = True,
     ) -> None:
@@ -104,8 +104,8 @@ class BathyRequest:
 
     @staticmethod
     def form_bbox(
-        longitude: Union[float, Iterable[float]],
-        latitude: Union[float, Iterable[float]],
+        longitude: float | Sequence[float],
+        latitude: float | Sequence[float],
         single_point: bool = False,
     ) -> list[float, float, float, float]:
         """Form bounding box from longitude and latitude.
@@ -146,8 +146,8 @@ class BathyRequest:
 
     def get_area(
         self,
-        longitude: Union[float, Iterable[float]],
-        latitude: Union[float, Iterable[float]],
+        longitude: float | Sequence[float],
+        latitude: float | Sequence[float],
         single_point: bool = False,
         **source_kwargs: dict,
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -237,9 +237,9 @@ class BathyRequest:
 
     def get_point(
         self,
-        longitude: Union[float, Iterable[float]],
-        latitude: Union[float, Iterable[float]],
-        interp_method: Optional[str] = "linear",
+        longitude: float | Sequence[float],
+        latitude: float | Sequence[float],
+        interp_method: str = "linear",
         **source_kwargs: dict,
     ) -> np.ndarray:
         """Get bathymetric data for a single point.
@@ -281,8 +281,14 @@ class BathyRequest:
     #     pass
 
     # TODO: Implement get_profile method to handle a line between two lat/lon pairs.
-    # def get_profile():
-    #     pass
+    def get_transect(
+            self,
+            longitude: Sequence[float],
+            latitude: Sequence[float],
+            interp_method: str = "linear",
+            **source_kwargs: dict,
+    ):
+        pass
 
     @staticmethod
     def load_data(filepath: Path) -> tuple[np.ndarray, rasterio.coords.BoundingBox]:
