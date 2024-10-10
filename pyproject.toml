@@ -10,7 +10,7 @@ requires-python = ">=3.10"
 license = {file = "LICENSE"}
 keywords = ["bathymetry", "oceanography", "data", "query", "download"]
 authors = [{name = "William Jenkins", email = "wjenkins@ucsd.edu"}]
-dependencies = ["python-dotenv", "rasterio", "requests", "scipy"]
+dependencies = ["geopy", "python-dotenv", "rasterio", "requests", "scipy"]
 dynamic = ["version"]
 
 [project.urls]
