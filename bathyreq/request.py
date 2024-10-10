@@ -39,12 +39,15 @@ Examples:
     [-1017.61428833]
 """
 
+from concurrent.futures import ThreadPoolExecutor
 import datetime
+from functools import partial
 from pathlib import Path
 import secrets
 import shutil
 from typing import Sequence
 
+from geopy import distance
 import numpy as np
 import rasterio
 import requests
@@ -276,19 +279,60 @@ class BathyRequest:
             method=interp_method,
         )
 
-    # TODO: Implement get_points method to handle multiple lat/lon pairs.
-    # def get_points():
-    #     pass
+    def get_points(
+        self,
+        points: Sequence[tuple[float, float]],
+        interp_method: str = "linear",
+        **source_kwargs: dict,
+    ) -> list[float]:
+        """Get bathymetry for a list of longitude/latitude points.
 
-    # TODO: Implement get_profile method to handle a line between two lat/lon pairs.
+        Args:
+            points: List of longitude/latitude points.
+            interp_method: Interpolation method, by default "linear".
+            **source_kwargs: Keyword arguments to pass to the data source.
+        """
+        with ThreadPoolExecutor(max_workers=64) as executor:
+            return list(
+                executor.map(
+                    partial(
+                        self.get_point, interp_method=interp_method, **source_kwargs
+                    ),
+                    [point[0] for point in points],
+                    [point[1] for point in points],
+                )
+            )
+
     def get_transect(
-            self,
-            longitude: Sequence[float],
-            latitude: Sequence[float],
-            interp_method: str = "linear",
-            **source_kwargs: dict,
-    ):
-        pass
+        self,
+        point1: Sequence[float],
+        point2: Sequence[float],
+        num_points: int = 100,
+        interp_method: str = "linear",
+        **source_kwargs: dict,
+    ) -> tuple[list[tuple[float, float]], list[float], list[float]]:
+
+        # Generate points along great circle transect (lon/lat pairs)
+        points = self.create_great_circle_transect(
+            point1[0], point1[1], point2[0], point2[1], num_points=num_points
+        )
+        # Get bathymetry at points
+        bathy = self.get_points(points, interp_method, **source_kwargs)
+        # Compute distances along track
+        distances = [
+            distance.geodesic(reversed(points[0]), reversed(point)).km
+            for point in points
+        ]
+        return points, bathy, distances
+
+    @staticmethod
+    def create_great_circle_transect(
+        lon1: float, lat1: float, lon2: float, lat2: float, num_points: int = 100
+    ) -> list[tuple[float, float]]:
+        """Generate a great circle transect between two geographic points."""
+        lons = np.linspace(lon1, lon2, num_points)
+        lats = np.linspace(lat1, lat2, num_points)
+        return list(zip(lons, lats))
 
     @staticmethod
     def load_data(filepath: Path) -> tuple[np.ndarray, rasterio.coords.BoundingBox]:
