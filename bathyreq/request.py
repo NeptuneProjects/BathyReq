@@ -46,6 +46,7 @@ from pathlib import Path
 import secrets
 import shutil
 from typing import Sequence
+import warnings
 
 from geopy import distance
 import numpy as np
@@ -56,6 +57,12 @@ from scipy.interpolate import interpn
 import bathyreq.sources.factory as factory
 
 CACHE_DIR: Path = Path(__file__).parents[0] / "cache"
+
+
+class ExcessivePointsWarning(UserWarning):
+    """Excessive points warning."""
+
+    pass
 
 
 class BathyRequest:
@@ -262,13 +269,6 @@ class BathyRequest:
         """
         DECIMALS = 5
 
-        # TODO: This is no longer needed for this method, but may be needed for 'get_points'.
-        # try:
-        #     iter(longitude)
-        #     single_point = False
-        # except: # TODO: Specify exception ("TypeError")
-        #     single_point = True
-
         data, lonvec, latvec = self.get_area(
             longitude, latitude, single_point=True, **source_kwargs
         )
@@ -288,11 +288,14 @@ class BathyRequest:
         """Get bathymetry for a list of longitude/latitude points.
 
         Args:
-            points: List of longitude/latitude points.
+            points: List of longitude/latitude points specified as tuples.
             interp_method: Interpolation method, by default "linear".
             **source_kwargs: Keyword arguments to pass to the data source.
+
+        Returns:
+            List of bathymetric data for each point.
         """
-        with ThreadPoolExecutor(max_workers=64) as executor:
+        with ThreadPoolExecutor(max_workers=32) as executor:
             return list(
                 executor.map(
                     partial(
@@ -311,6 +314,29 @@ class BathyRequest:
         interp_method: str = "linear",
         **source_kwargs: dict,
     ) -> tuple[list[tuple[float, float]], list[float], list[float]]:
+        """Get bathymetry along a great circle transect.
+
+        Args:
+            point1: First point (longitude, latitude).
+            point2: Second point (longitude, latitude).
+            num_points: Number of points along the transect, by default 100.
+            interp_method: Interpolation method, by default "linear".
+            **source_kwargs: Keyword arguments to pass to the data source.
+
+        Returns:
+            Points along the transect.
+            Bathymetry at each point.
+            Distances along the transect.
+        """
+
+        if num_points > 800:
+            warnings.warn(
+                ">800 points requested. The server may be unable to handle "
+                "this request; `num_points` set to 800. For larger requests, "
+                "consider retrieving an area using `get_area` and interpolating.",
+                ExcessivePointsWarning,
+            )
+            num_points = 800
 
         # Generate points along great circle transect (lon/lat pairs)
         points = self.create_great_circle_transect(
