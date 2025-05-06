@@ -32,27 +32,35 @@ def make_image(
     return fig
 
 
-def make_logo() -> None:
+def make_logo(save: bool = False, show: bool = True) -> None:
     LON = [-117.30, -117.25]
     LAT = [32.84, 32.89]
 
-    make_image(LON, LAT, [1000, 1000], (3, 3)).savefig(PATH / "logo.png", dpi=DPI)
-    plt.close()
+    fig = make_image(LON, LAT, [1000, 1000], (3, 3))
+    if save:
+        fig.savefig(PATH / "logo.png", dpi=DPI)
+        plt.close()
+    if show:
+        plt.show()
 
 
-def make_banner() -> None:
+def make_banner(save: bool = False, show: bool = True) -> None:
     LON = [-117.36, -117.24]
     LAT = [32.845, 32.915]
 
-    make_image(LON, LAT, [2000, 1000], (6, 3)).savefig(PATH / "banner.png", dpi=DPI)
-    plt.close()
+    fig = make_image(LON, LAT, [2000, 1000], (6, 3))
+    if save:
+        fig.savefig(PATH / "banner.png", dpi=DPI)
+        plt.close()
+    if show:
+        plt.show()
 
 
 def main(args: argparse.Namespace) -> None:
     if args.banner:
-        make_banner()
+        make_banner(args.save, args.show)
     if args.logo:
-        make_logo()
+        make_logo(args.save, args.show)
 
 
 if __name__ == "__main__":
@@ -62,12 +70,26 @@ if __name__ == "__main__":
         "--logo",
         action="store_true",
         help="Make logo",
+        default=True,
     )
     parser.add_argument(
         "-b",
         "--banner",
         action="store_true",
         help="Make banner",
+        default=True,
+    )
+    parser.add_argument(
+        "--save",
+        action="store_true",
+        help="Save the logo and banner",
+        default=False,
+    )
+    parser.add_argument(
+        "--show",
+        action="store_true",
+        help="Show the logo and banner",
+        default=True,
     )
     args = parser.parse_args()
     main(args)
