@@ -24,6 +24,7 @@
 
 """Module provides factory function to build `Source` instances."""
 
+from collections.abc import Sequence
 from enum import Enum
 from typing import Protocol
 
@@ -57,7 +58,7 @@ class Source(Protocol):
 
 
 def factory(
-    bbox: list[float, float, float, float], source: str = "ncei", **kwargs
+    bbox: Sequence[float], source: str = "ncei", **kwargs
 ) -> Source:
     """Factory function to return a source object.
 

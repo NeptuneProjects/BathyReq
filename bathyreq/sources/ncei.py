@@ -25,7 +25,6 @@
 """Module for composing NCEI `Source`."""
 
 from dataclasses import asdict, dataclass, field
-from typing import Optional
 import urllib.parse
 
 
@@ -104,12 +103,12 @@ class NCEIRequest:
     size: list[int]
     format: str
     pixelType: str
-    bboxSR: Optional[int] = None
-    imageSR: Optional[int] = None
+    bboxSR: int | None = None
+    imageSR: int | None = None
     nodata: float = 0.0
     interpolation: str = "RSP_NearestNeighbor"
     compression: str = "LZ77"
-    renderingRule: Optional[str] = None
+    renderingRule: str | None = None
     f: str = "image"
 
     def build_request(self) -> None:
@@ -159,7 +158,7 @@ class NCEISource:
     """
 
     base: NCEIBase = field(default_factory=NCEIBase())
-    request: Optional[NCEIRequest] = None
+    request: NCEIRequest | None = None
 
     def build_url(self) -> None:
         """Build the URL for the request.

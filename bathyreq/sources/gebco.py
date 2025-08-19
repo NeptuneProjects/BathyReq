@@ -25,7 +25,6 @@
 """Module for composing GEBCO `Source`."""
 
 from dataclasses import asdict, dataclass, field
-from typing import Optional
 import urllib.parse
 
 
@@ -66,7 +65,7 @@ class GEBCORequest:
 @dataclass
 class GEBCOSource:
     base: GEBCOBase = field(default_factory=GEBCOBase())
-    request: Optional[GEBCORequest] = None
+    request: GEBCORequest | None = None
 
     def build_url(self) -> None:
         """Build the URL for the request.

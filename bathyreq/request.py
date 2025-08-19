@@ -39,17 +39,18 @@ Examples:
     [-1017.61428833]
 """
 
+from collections.abc import Sequence
 from concurrent.futures import ThreadPoolExecutor
 import datetime
 from functools import partial
 from pathlib import Path
 import secrets
 import shutil
-from typing import Sequence
 import warnings
 
 from geopy import distance
 import numpy as np
+from numpy.typing import ArrayLike, NDArray
 import rasterio
 import requests
 from scipy.interpolate import interpn
@@ -160,7 +161,7 @@ class BathyRequest:
         latitude: float | Sequence[float],
         single_point: bool = False,
         **source_kwargs: dict,
-    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    ) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64]]:
         """Get bathymetric data for an area.
 
         The area is defined by the min/max of the longitude and latitude
@@ -230,8 +231,8 @@ class BathyRequest:
 
     @staticmethod
     def get_latlon_grids(
-        bounds: rasterio.coords.BoundingBox, data: np.ndarray
-    ) -> tuple[np.ndarray, np.ndarray]:
+        bounds: rasterio.coords.BoundingBox, data: ArrayLike
+    ) -> tuple[NDArray[np.float64], NDArray[np.float64]]:
         """Get lat/lon grids from bounding box and data.
 
         Args:
@@ -251,7 +252,7 @@ class BathyRequest:
         latitude: float | Sequence[float],
         interp_method: str = "linear",
         **source_kwargs: dict,
-    ) -> np.ndarray:
+    ) -> NDArray[np.float64]:
         """Get bathymetric data for a single point.
 
         A small area of bathymetry surrounding the query point is downloaded
@@ -361,7 +362,7 @@ class BathyRequest:
         return list(zip(lons, lats))
 
     @staticmethod
-    def load_data(filepath: Path) -> tuple[np.ndarray, rasterio.coords.BoundingBox]:
+    def load_data(filepath: Path) -> tuple[NDArray[np.float64], rasterio.coords.BoundingBox]:
         """Load data from filepath.
 
         Args:
