@@ -49,12 +49,6 @@ University of California San Diego
 
 [![DOI](https://zenodo.org/badge/679471492.svg)](https://zenodo.org/badge/latestdoi/679471492)
 
-## Support
-
-If you find this package useful and if it's saved you lots of time and effort, please consider supporting the project by buying me a coffee!
-
-<a href="https://www.buymeacoffee.com/wjenkins" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
-
 ## License
 
 This project is licensed under the MIT License - see the [license](license.md) for details.
